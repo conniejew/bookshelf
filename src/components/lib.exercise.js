@@ -1,23 +1,18 @@
-import styled from '@emotion/styled'
+import styled from '@emotion/styled/macro'
 import {Dialog as ReachDialog} from '@reach/dialog'
-
-// 🐨 create a button styled component here called "Button"
-// make it look nice and allow it to support a "variant" prop which can be
-// either "primary" or "secondary".
-// 💰 don't forget to export it at the bottom!
-// 💰 In my final version, I style padding, border, lineHeight, and borderRadius
-//    the same for both types, and then change the background and color based
-//    on the given variant.
-// 🦉 remember, you don't have to make things look perfect or just like they
-// do in the final example. Just make sure you understand how to create the
-// styled component and accept a prop to change which styles apply.
+import {keyframes} from '@emotion/core'
+import {FaSpinner} from 'react-icons/fa'
+import * as colors from 'styles/colors'
+import * as mq from 'styles/media-queries'
 
 const buttonVariants = {
   primary: {
-    backgroundColor: 'turquoise',
+    backgroundColor: colors.indigo,
+    color: colors.base,
   },
   secondary: {
-    backgroundColor: 'blue',
+    backgroundColor: colors.gray,
+    color: colors.text,
   },
 }
 
@@ -26,7 +21,6 @@ const Button = styled.button(
     padding: '5px 20px',
     border: 0,
     borderRadius: '4px',
-    color: 'white',
   },
   ({variant = 'primary'}) => buttonVariants[variant],
 )
@@ -62,10 +56,21 @@ const Dialog = styled(ReachDialog)({
   paddingBottom: '3.5em',
   boxShadow: '0 10px 30px -5px rgba(0, 0, 0, 0.2)',
   margin: '20vh auto',
-  '@media (max-width: 991px)': {
+  [mq.small]: {
     width: '100%',
     margin: '10vh auto',
+    backgroundColor: colors.indigo,
+    color: colors.gray,
   },
 })
 
-export {CircleButton, Dialog, Button, Input, FormGroup}
+const spin = keyframes({
+  '0%': {transform: 'rotate(30deg)'},
+  '100%': {transform: 'rotate(360deg)'},
+})
+
+const Spinner = styled(FaSpinner)({
+  animation: `${spin} 2s infinite linear`,
+})
+
+export {CircleButton, Dialog, Button, Input, FormGroup, Spinner}
